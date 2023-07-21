@@ -1,4 +1,7 @@
-import { InMemoryProviderService } from './in-memory-provider.service';
+import {
+  InMemoryProviderEnum,
+  InMemoryProviderService,
+} from './in-memory-provider.service';
 
 import { FeatureFlagsService } from '../feature-flags.service';
 import { GetIsInMemoryClusterModeEnabled } from '../../usecases';
@@ -18,7 +21,7 @@ describe('In-memory Provider Service', () => {
       inMemoryProviderService = new InMemoryProviderService(
         getIsInMemoryClusterModeEnabled
       );
-      inMemoryProviderService.initialize();
+      inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
 
       await inMemoryProviderService.delayUntilReadiness();
 
@@ -97,7 +100,7 @@ describe('In-memory Provider Service', () => {
       inMemoryProviderService = new InMemoryProviderService(
         getIsInMemoryClusterModeEnabled
       );
-      await inMemoryProviderService.initialize();
+      await inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
 
       await inMemoryProviderService.delayUntilReadiness();
 
@@ -114,7 +117,7 @@ describe('In-memory Provider Service', () => {
           getIsInMemoryClusterModeEnabled,
           true
         );
-        await clusterWithPipelining.initialize();
+        await clusterWithPipelining.initialize(InMemoryProviderEnum.REDIS);
         await clusterWithPipelining.delayUntilReadiness();
 
         expect(clusterWithPipelining.getStatus()).toEqual('ready');

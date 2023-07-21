@@ -10,6 +10,7 @@ import {
   FeatureFlagsService,
   InMemoryProviderService,
   InvalidateCacheService,
+  InMemoryProviderEnum,
 } from '@novu/application-generic';
 
 const integrationRepository = new IntegrationRepository();
@@ -24,7 +25,7 @@ describe('Initialize Session - /widgets/session/initialize (POST)', async () => 
     await featureFlagsService.initialize();
     const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
     const inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
-    await inMemoryProviderService.initialize();
+    await inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
     const cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();
     invalidateCache = new InvalidateCacheService(cacheService);

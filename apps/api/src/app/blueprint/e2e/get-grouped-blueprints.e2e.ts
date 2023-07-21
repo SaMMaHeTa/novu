@@ -9,6 +9,7 @@ import {
   CacheService,
   FeatureFlagsService,
   GetIsInMemoryClusterModeEnabled,
+  InMemoryProviderEnum,
   InMemoryProviderService,
   InvalidateCacheService,
 } from '@novu/application-generic';
@@ -33,7 +34,7 @@ describe('Get grouped notification template blueprints - /blueprints/group-by-ca
     await featureFlagsService.initialize();
     const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
     const inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
-    await inMemoryProviderService.initialize();
+    await inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
     const cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();
     invalidateCache = new InvalidateCacheService(cacheService);

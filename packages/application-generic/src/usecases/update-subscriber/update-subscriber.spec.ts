@@ -10,6 +10,7 @@ import {
   FeatureFlagsService,
   InvalidateCacheService,
   InMemoryProviderService,
+  InMemoryProviderEnum,
 } from '../../services';
 
 const inMemoryProviderService = {
@@ -22,7 +23,7 @@ const inMemoryProviderService = {
     const inMemoryProvider = new InMemoryProviderService(
       getIsInMemoryClusterModeEnabled
     );
-    await inMemoryProvider.initialize();
+    await inMemoryProvider.initialize(InMemoryProviderEnum.REDIS);
 
     return inMemoryProvider;
   },

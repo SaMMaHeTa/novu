@@ -1,3 +1,9 @@
+import {
+  FeatureFlagsService,
+  GetIsInMemoryClusterModeEnabled,
+  InMemoryProviderEnum,
+  InMemoryProviderService,
+} from '@novu/application-generic';
 import { expect } from 'chai';
 import * as request from 'supertest';
 import * as defaults from 'superagent-defaults';
@@ -6,6 +12,11 @@ describe('Health-check', () => {
   let testAgent;
 
   before(async () => {
+    const featureFlagsService = new FeatureFlagsService();
+    const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
+    const inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
+    await inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
+
     testAgent = defaults(request(`http://localhost:${process.env.PORT}`));
   });
 

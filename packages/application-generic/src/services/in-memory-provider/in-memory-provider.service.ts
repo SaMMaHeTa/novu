@@ -26,6 +26,12 @@ import { GetIsInMemoryClusterModeEnabled } from '../../usecases';
 
 const LOG_CONTEXT = 'InMemoryCluster';
 
+export enum InMemoryProviderEnum {
+  ELASTICACHE = 'Elasticache',
+  MEMORY_DB = 'MemoryDB',
+  REDIS = 'Redis',
+}
+
 export type InMemoryProviderClient = Redis | Cluster | undefined;
 type InMemoryProviderConfig =
   | IElasticacheClusterProviderConfig
@@ -45,17 +51,19 @@ export class InMemoryProviderService {
     private enableAutoPipelining?: boolean
   ) {}
 
-  async initialize(): Promise<void> {
+  async initialize(provider: InMemoryProviderEnum): Promise<void> {
     Logger.log('In-memory provider service initialized', LOG_CONTEXT);
 
-    this.inMemoryProviderClient = await this.buildClient();
+    this.inMemoryProviderClient = await this.buildClient(provider);
   }
 
-  private async buildClient(): Promise<Redis | Cluster | undefined> {
+  private async buildClient(
+    provider: InMemoryProviderEnum
+  ): Promise<Redis | Cluster | undefined> {
     const isClusterMode = await this.isClusterMode();
 
     return isClusterMode
-      ? this.inMemoryClusterProviderSetup()
+      ? this.inMemoryClusterProviderSetup(provider)
       : this.inMemoryProviderSetup();
   }
 
@@ -124,6 +132,7 @@ export class InMemoryProviderService {
     }
   }
 
+  // TODO: Reuse to check the config is enabled and if not Redis Cluster is reused
   private isElasticacheEnabled(): boolean {
     return (
       !!process.env.ELASTICACHE_CLUSTER_SERVICE_HOST &&
@@ -131,36 +140,43 @@ export class InMemoryProviderService {
     );
   }
 
-  private getClientAndConfigForCluster(): {
+  private getClientAndConfigForCluster(provider: InMemoryProviderEnum): {
     getClient: (enableAutoPipelining?: boolean) => Cluster | undefined;
     getConfig: () => InMemoryProviderConfig;
   } {
     const clusterProviders = {
-      elasticache: {
+      [InMemoryProviderEnum.ELASTICACHE]: {
         getClient: getElasticacheCluster,
         getConfig: getElasticacheClusterProviderConfig,
       },
-      redis: {
+      [InMemoryProviderEnum.REDIS]: {
         getClient: getRedisCluster,
         getConfig: getRedisClusterProviderConfig,
       },
     };
 
-    return this.isElasticacheEnabled()
-      ? clusterProviders.elasticache
-      : clusterProviders.redis;
+    return (
+      clusterProviders[provider] || clusterProviders[InMemoryProviderEnum.REDIS]
+    );
   }
 
-  private inMemoryClusterProviderSetup(): Cluster | undefined {
-    Logger.verbose('In-memory cluster service set up', LOG_CONTEXT);
+  private inMemoryClusterProviderSetup(provider): Cluster | undefined {
+    Logger.verbose(
+      `In-memory cluster service set up for ${provider}`,
+      LOG_CONTEXT
+    );
 
-    const { getConfig, getClient } = this.getClientAndConfigForCluster();
+    const { getConfig, getClient } =
+      this.getClientAndConfigForCluster(provider);
 
     this.inMemoryProviderConfig = getConfig();
     const { host, ttl } = getConfig();
 
     if (!host) {
-      Logger.warn('Missing host for in-memory cluster provider', LOG_CONTEXT);
+      Logger.warn(
+        `Missing host for in-memory cluster for provider ${provider}`,
+        LOG_CONTEXT
+      );
     }
 
     const inMemoryProviderClient = getClient(this.enableAutoPipelining);

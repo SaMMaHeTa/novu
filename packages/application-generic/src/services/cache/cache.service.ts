@@ -3,6 +3,7 @@ import { Logger } from '@nestjs/common';
 import { QUERY_PREFIX } from './key-builders';
 import {
   InMemoryProviderClient,
+  InMemoryProviderEnum,
   InMemoryProviderService,
   Pipeline,
 } from '../index';
@@ -39,7 +40,9 @@ export class CacheService implements ICacheService {
   public async initialize(): Promise<void> {
     Logger.log('Initiated cache service', LOG_CONTEXT);
 
-    await this.inMemoryProviderService.initialize();
+    await this.inMemoryProviderService.initialize(
+      InMemoryProviderEnum.ELASTICACHE
+    );
 
     this.client = this.inMemoryProviderService.inMemoryProviderClient;
     this.cacheTtl = this.inMemoryProviderService.inMemoryProviderConfig.ttl;

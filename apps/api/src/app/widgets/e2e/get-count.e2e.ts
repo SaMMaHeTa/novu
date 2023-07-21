@@ -11,6 +11,7 @@ import {
   InvalidateCacheService,
   GetIsInMemoryClusterModeEnabled,
   FeatureFlagsService,
+  InMemoryProviderEnum,
 } from '@novu/application-generic';
 
 describe('Count - GET /widget/notifications/count', function () {
@@ -30,7 +31,7 @@ describe('Count - GET /widget/notifications/count', function () {
     const featureFlagsService = new FeatureFlagsService();
     const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
     inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
-    await inMemoryProviderService.initialize();
+    await inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
     const cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();
     invalidateCache = new InvalidateCacheService(cacheService);

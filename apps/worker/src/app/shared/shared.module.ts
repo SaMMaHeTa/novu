@@ -46,6 +46,7 @@ import {
   TriggerQueueService,
   LaunchDarklyService,
   FeatureFlagsService,
+  InMemoryProviderEnum,
 } from '@novu/application-generic';
 
 import * as packageJson from '../../../package.json';
@@ -131,10 +132,11 @@ const inMemoryProviderService = {
   provide: InMemoryProviderService,
   useFactory: async (
     getIsInMemoryClusterModeEnabledUseCase: GetIsInMemoryClusterModeEnabled,
+    provider: InMemoryProviderEnum,
     enableAutoPipelining?: boolean
   ): Promise<InMemoryProviderService> => {
     const inMemoryProvider = new InMemoryProviderService(getIsInMemoryClusterModeEnabledUseCase, enableAutoPipelining);
-    await inMemoryProvider.initialize();
+    await inMemoryProvider.initialize(provider);
 
     return inMemoryProvider;
   },
@@ -150,6 +152,7 @@ const cacheService = {
     const enableAutoPipelining = process.env.REDIS_CACHE_ENABLE_AUTOPIPELINING === 'true';
     const factoryInMemoryProviderService = await inMemoryProviderService.useFactory(
       getIsInMemoryClusterModeEnabledUseCase,
+      InMemoryProviderEnum.ELASTICACHE,
       enableAutoPipelining
     );
 
@@ -168,10 +171,15 @@ const distributedLockService = {
     getIsInMemoryClusterModeEnabledUseCase: GetIsInMemoryClusterModeEnabled
   ): Promise<DistributedLockService> => {
     const factoryInMemoryProviderService = await inMemoryProviderService.useFactory(
-      getIsInMemoryClusterModeEnabledUseCase
+      getIsInMemoryClusterModeEnabledUseCase,
+      InMemoryProviderEnum.ELASTICACHE
     );
 
-    return new DistributedLockService(factoryInMemoryProviderService);
+    const service = new DistributedLockService(factoryInMemoryProviderService);
+
+    await service.initialize();
+
+    return service;
   },
   inject: [GetIsInMemoryClusterModeEnabled],
 };

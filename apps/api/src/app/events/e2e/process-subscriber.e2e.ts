@@ -17,6 +17,7 @@ import {
   buildNotificationTemplateIdentifierKey,
   buildNotificationTemplateKey,
   InvalidateCacheService,
+  InMemoryProviderEnum,
 } from '@novu/application-generic';
 
 import { UpdateSubscriberPreferenceRequestDto } from '../../widgets/dtos/update-subscriber-preference-request.dto';
@@ -43,7 +44,7 @@ describe('Trigger event - process subscriber /v1/events/trigger (POST)', functio
     await featureFlagsService.initialize();
     const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
     inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
-    await inMemoryProviderService.initialize();
+    await inMemoryProviderService.initialize(InMemoryProviderEnum.REDIS);
     cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();
     invalidateCache = new InvalidateCacheService(cacheService);

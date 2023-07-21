@@ -8,6 +8,7 @@ import { CreateSubscriberCommand } from './create-subscriber.command';
 import {
   CacheService,
   FeatureFlagsService,
+  InMemoryProviderEnum,
   InMemoryProviderService,
   InvalidateCacheService,
 } from '../../services';
@@ -25,7 +26,7 @@ const inMemoryProviderService = {
       getIsInMemoryClusterModeEnabled
     );
 
-    await inMemoryProvider.initialize();
+    await inMemoryProvider.initialize(InMemoryProviderEnum.REDIS);
 
     return inMemoryProvider;
   },
