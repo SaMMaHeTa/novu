@@ -12,7 +12,7 @@ import { ChannelTypeEnum, ISubscribersDefine, IUpdateNotificationTemplateDto, St
 import {
   CacheService,
   FeatureFlagsService,
-  GetFeatureFlag,
+  GetIsInMemoryClusterModeEnabled,
   InMemoryProviderService,
   buildNotificationTemplateIdentifierKey,
   buildNotificationTemplateKey,
@@ -41,8 +41,8 @@ describe('Trigger event - process subscriber /v1/events/trigger (POST)', functio
   before(async () => {
     featureFlagsService = new FeatureFlagsService();
     await featureFlagsService.initialize();
-    const getFeatureFlag = new GetFeatureFlag(featureFlagsService);
-    inMemoryProviderService = new InMemoryProviderService(getFeatureFlag);
+    const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
+    inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
     await inMemoryProviderService.initialize();
     cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();

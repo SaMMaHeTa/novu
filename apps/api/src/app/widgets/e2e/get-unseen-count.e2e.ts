@@ -9,7 +9,7 @@ import {
   buildMessageCountKey,
   CacheService,
   InvalidateCacheService,
-  GetFeatureFlag,
+  GetIsInMemoryClusterModeEnabled,
   FeatureFlagsService,
 } from '@novu/application-generic';
 
@@ -29,8 +29,8 @@ describe('Unseen Count - GET /widget/notifications/unseen', function () {
   before(async () => {
     const featureFlagsService = new FeatureFlagsService();
     await featureFlagsService.initialize();
-    const getFeatureFlag = new GetFeatureFlag(featureFlagsService);
-    inMemoryProviderService = new InMemoryProviderService(getFeatureFlag);
+    const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
+    inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
     await inMemoryProviderService.initialize();
     const cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();

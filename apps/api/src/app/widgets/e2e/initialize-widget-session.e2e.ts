@@ -6,7 +6,7 @@ import { createHash } from '../../shared/helpers/hmac.service';
 import {
   buildIntegrationKey,
   CacheService,
-  GetFeatureFlag,
+  GetIsInMemoryClusterModeEnabled,
   FeatureFlagsService,
   InMemoryProviderService,
   InvalidateCacheService,
@@ -22,8 +22,8 @@ describe('Initialize Session - /widgets/session/initialize (POST)', async () => 
   before(async () => {
     const featureFlagsService = new FeatureFlagsService();
     await featureFlagsService.initialize();
-    const getFeatureFlag = new GetFeatureFlag(featureFlagsService);
-    const inMemoryProviderService = new InMemoryProviderService(getFeatureFlag);
+    const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
+    const inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
     await inMemoryProviderService.initialize();
     const cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();

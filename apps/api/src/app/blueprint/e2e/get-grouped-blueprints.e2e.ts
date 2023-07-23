@@ -8,7 +8,7 @@ import {
   buildGroupedBlueprintsKey,
   CacheService,
   FeatureFlagsService,
-  GetFeatureFlag,
+  GetIsInMemoryClusterModeEnabled,
   InMemoryProviderService,
   InvalidateCacheService,
 } from '@novu/application-generic';
@@ -31,8 +31,8 @@ describe('Get grouped notification template blueprints - /blueprints/group-by-ca
 
   before(async () => {
     await featureFlagsService.initialize();
-    const getFeatureFlag = new GetFeatureFlag(featureFlagsService);
-    const inMemoryProviderService = new InMemoryProviderService(getFeatureFlag);
+    const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(featureFlagsService);
+    const inMemoryProviderService = new InMemoryProviderService(getIsInMemoryClusterModeEnabled);
     await inMemoryProviderService.initialize();
     const cacheService = new CacheService(inMemoryProviderService);
     await cacheService.initialize();

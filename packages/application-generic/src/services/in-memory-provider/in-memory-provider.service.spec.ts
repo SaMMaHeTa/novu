@@ -1,10 +1,12 @@
 import { InMemoryProviderService } from './in-memory-provider.service';
 
 import { FeatureFlagsService } from '../feature-flags.service';
-import { GetFeatureFlag } from '../../usecases';
+import { GetIsInMemoryClusterModeEnabled } from '../../usecases';
 
 const featureFlagsService = new FeatureFlagsService();
-const getFeatureFlag = new GetFeatureFlag(featureFlagsService);
+const getIsInMemoryClusterModeEnabled = new GetIsInMemoryClusterModeEnabled(
+  featureFlagsService
+);
 
 let inMemoryProviderService: InMemoryProviderService;
 
@@ -13,7 +15,9 @@ describe('In-memory Provider Service', () => {
     beforeEach(async () => {
       process.env.IS_IN_MEMORY_CLUSTER_MODE_ENABLED = 'false';
 
-      inMemoryProviderService = new InMemoryProviderService(getFeatureFlag);
+      inMemoryProviderService = new InMemoryProviderService(
+        getIsInMemoryClusterModeEnabled
+      );
       inMemoryProviderService.initialize();
 
       await inMemoryProviderService.delayUntilReadiness();
@@ -90,7 +94,9 @@ describe('In-memory Provider Service', () => {
     beforeEach(async () => {
       process.env.IS_IN_MEMORY_CLUSTER_MODE_ENABLED = 'true';
 
-      inMemoryProviderService = new InMemoryProviderService(getFeatureFlag);
+      inMemoryProviderService = new InMemoryProviderService(
+        getIsInMemoryClusterModeEnabled
+      );
       await inMemoryProviderService.initialize();
 
       await inMemoryProviderService.delayUntilReadiness();
@@ -105,7 +111,7 @@ describe('In-memory Provider Service', () => {
     describe('TEMP: Check if enableAutoPipelining true is set properly in Cluster', () => {
       it('enableAutoPipelining is enabled', async () => {
         const clusterWithPipelining = new InMemoryProviderService(
-          getFeatureFlag,
+          getIsInMemoryClusterModeEnabled,
           true
         );
         await clusterWithPipelining.initialize();

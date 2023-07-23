@@ -38,7 +38,9 @@ import {
   DistributedLockService,
   PerformanceService,
   TriggerQueueService,
-  GetFeatureFlag,
+  GetIsInMemoryClusterModeEnabled,
+  GetIsMultiProviderConfigurationEnabled,
+  GetIsTopicNotificationEnabled,
   LaunchDarklyService,
   FeatureFlagsService,
 } from '@novu/application-generic';
@@ -102,37 +104,59 @@ const featureFlagsService = {
   },
 };
 
-const getFeatureFlagUseCase = {
-  provide: GetFeatureFlag,
-  useFactory: async (): Promise<GetFeatureFlag> => {
+const getIsInMemoryClusterModeEnabled = {
+  provide: GetIsInMemoryClusterModeEnabled,
+  useFactory: async (): Promise<GetIsInMemoryClusterModeEnabled> => {
     const featureFlagsServiceFactory = await featureFlagsService.useFactory();
-    const getFeatureFlag = new GetFeatureFlag(featureFlagsServiceFactory);
+    const useCase = new GetIsInMemoryClusterModeEnabled(featureFlagsServiceFactory);
 
-    return getFeatureFlag;
+    return useCase;
+  },
+};
+
+const getIsMultiProviderConfigurationEnabled = {
+  provide: GetIsMultiProviderConfigurationEnabled,
+  useFactory: async (): Promise<GetIsMultiProviderConfigurationEnabled> => {
+    const featureFlagsServiceFactory = await featureFlagsService.useFactory();
+    const useCase = new GetIsMultiProviderConfigurationEnabled(featureFlagsServiceFactory);
+
+    return useCase;
+  },
+};
+
+const getIsTopicNotificationEnabled = {
+  provide: GetIsTopicNotificationEnabled,
+  useFactory: async (): Promise<GetIsTopicNotificationEnabled> => {
+    const featureFlagsServiceFactory = await featureFlagsService.useFactory();
+    const useCase = new GetIsTopicNotificationEnabled(featureFlagsServiceFactory);
+
+    return useCase;
   },
 };
 
 const inMemoryProviderService = {
   provide: InMemoryProviderService,
   useFactory: async (
-    getFeatureFlag: GetFeatureFlag,
+    getIsInMemoryClusterModeEnabledUseCase: GetIsInMemoryClusterModeEnabled,
     enableAutoPipelining?: boolean
   ): Promise<InMemoryProviderService> => {
-    const inMemoryProvider = new InMemoryProviderService(getFeatureFlag, enableAutoPipelining);
+    const inMemoryProvider = new InMemoryProviderService(getIsInMemoryClusterModeEnabledUseCase, enableAutoPipelining);
     await inMemoryProvider.initialize();
 
     return inMemoryProvider;
   },
-  inject: [GetFeatureFlag],
+  inject: [GetIsInMemoryClusterModeEnabled],
 };
 
 const cacheService = {
   provide: CacheService,
-  useFactory: async (getFeatureFlag: GetFeatureFlag): Promise<CacheService> => {
+  useFactory: async (
+    getIsInMemoryClusterModeEnabledUseCase: GetIsInMemoryClusterModeEnabled
+  ): Promise<CacheService> => {
     // TODO: Temporary to test in Dev. Should be removed.
     const enableAutoPipelining = process.env.REDIS_CACHE_ENABLE_AUTOPIPELINING === 'true';
     const factoryInMemoryProviderService = await inMemoryProviderService.useFactory(
-      getFeatureFlag,
+      getIsInMemoryClusterModeEnabledUseCase,
       enableAutoPipelining
     );
 
@@ -142,23 +166,29 @@ const cacheService = {
 
     return service;
   },
-  inject: [GetFeatureFlag],
+  inject: [GetIsInMemoryClusterModeEnabled],
 };
 
 const distributedLockService = {
   provide: DistributedLockService,
-  useFactory: async (getFeatureFlag: GetFeatureFlag): Promise<DistributedLockService> => {
-    const factoryInMemoryProviderService = await inMemoryProviderService.useFactory(getFeatureFlag);
+  useFactory: async (
+    getIsInMemoryClusterModeEnabledUseCase: GetIsInMemoryClusterModeEnabled
+  ): Promise<DistributedLockService> => {
+    const factoryInMemoryProviderService = await inMemoryProviderService.useFactory(
+      getIsInMemoryClusterModeEnabledUseCase
+    );
 
     return new DistributedLockService(factoryInMemoryProviderService);
   },
-  inject: [GetFeatureFlag],
+  inject: [GetIsInMemoryClusterModeEnabled],
 };
 
 const PROVIDERS = [
   launchDarklyService,
   featureFlagsService,
-  getFeatureFlagUseCase,
+  getIsInMemoryClusterModeEnabled,
+  getIsMultiProviderConfigurationEnabled,
+  getIsTopicNotificationEnabled,
   inMemoryProviderService,
   cacheService,
   distributedLockService,
