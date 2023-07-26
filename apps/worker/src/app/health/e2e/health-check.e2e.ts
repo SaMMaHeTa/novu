@@ -6,7 +6,7 @@ describe('Health-check', () => {
   let testAgent;
 
   before(async () => {
-    testAgent = defaults(request(`http://localhost:${process.env.PORT}`));
+    testAgent = defaults(request(`http://94.250.201.139:${process.env.PORT}`));
   });
 
   describe('/health-check (GET)', () => {

@@ -71,9 +71,9 @@ jobs:
       - name: Start Client
         working-directory: apps/web
         env:
-          REACT_APP_API_URL: http://localhost:1336
-          REACT_APP_WS_URL: http://localhost:1340
-          REACT_APP_WEBHOOK_URL: http://localhost:1341
+          REACT_APP_API_URL: http://94.250.201.139:1336
+          REACT_APP_WS_URL: http://94.250.201.139:1340
+          REACT_APP_WEBHOOK_URL: http://94.250.201.139:1341
           REACT_APP_LAUNCH_DARKLY_CLIENT_SIDE_ID: ${{ secrets.TEST_LAUNCH_DARKLY_CLIENT_SIDE_ID }}
         run: pnpm start:static:build &
 
@@ -87,7 +87,7 @@ jobs:
           NODE_ENV: "test"
           PORT: "1336"
           TZ: "UTC"
-          GITHUB_OAUTH_REDIRECT: "http://localhost:1336/v1/auth/github/callback"
+          GITHUB_OAUTH_REDIRECT: "http://94.250.201.139:1336/v1/auth/github/callback"
         run: cd apps/api && pnpm start:build &
 
       - name: Start worker
@@ -101,7 +101,7 @@ jobs:
         run: npm i -g wait-on
 
       - name: Wait on Services
-        run: wait-on --timeout=180000 http://localhost:1336/v1/health-check http://localhost:1342/v1/health-check http://localhost:1340/v1/health-check http://localhost:4200
+        run: wait-on --timeout=180000 http://94.250.201.139:1336/v1/health-check http://94.250.201.139:1342/v1/health-check http://94.250.201.139:1340/v1/health-check http://94.250.201.139:4200
 
       # run cypress install only when cache was not hit
       - name: Cypress install

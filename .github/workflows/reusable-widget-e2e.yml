@@ -88,7 +88,7 @@ jobs:
           NODE_ENV: "test"
           PORT: "1336"
           TZ: "UTC"
-          GITHUB_OAUTH_REDIRECT: "http://localhost:1336/v1/auth/github/callback"
+          GITHUB_OAUTH_REDIRECT: "http://94.250.201.139:1336/v1/auth/github/callback"
         run: cd apps/api && pnpm start:build &
 
       - name: Start worker
@@ -102,7 +102,7 @@ jobs:
         run: npm i -g wait-on
 
       - name: Wait on Services
-        run: wait-on --timeout=180000 http://localhost:1336/v1/health-check http://localhost:1342/v1/health-check http://localhost:1340/v1/health-check http://localhost:3500
+        run: wait-on --timeout=180000 http://94.250.201.139:1336/v1/health-check http://94.250.201.139:1342/v1/health-check http://94.250.201.139:1340/v1/health-check http://94.250.201.139:3500
 
       - name: Cypress install
         if: steps.setup-project.outputs.cypress_cache_hit != 'true'
@@ -117,7 +117,7 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_WIDGET_KEY }}
         with:
           working-directory: apps/widget
-          wait-on: http://localhost:3500
+          wait-on: http://94.250.201.139:3500
           browser: chrome
           install: false
           record: true

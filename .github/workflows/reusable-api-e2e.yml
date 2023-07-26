@@ -69,7 +69,7 @@ jobs:
         run: cd apps/worker && pnpm start:test &
 
       - name: Wait on worker
-        run: wait-on --timeout=180000 http://localhost:1342/v1/health-check
+        run: wait-on --timeout=180000 http://94.250.201.139:1342/v1/health-check
 
         # Runs a single command using the runners shell
       - name: Build API

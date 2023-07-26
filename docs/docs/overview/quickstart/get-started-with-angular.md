@@ -44,7 +44,7 @@ Once you are in the app directory, you can start the development ser
 ng serve
 ```
 
-This command will start the development server and launch your app in the default browser. You can access your app by navigating to `http://localhost:4200/`.
+This command will start the development server and launch your app in the default browser. You can access your app by navigating to `http://94.250.201.139:4200/`.
 
 ![go9ch8vqvatmroiiz8c5.png](https://res.cloudinary.com/dxc6bnman/image/upload/v1686776582/go9ch8vqvatmroiiz8c5_okfqai.png)
 
