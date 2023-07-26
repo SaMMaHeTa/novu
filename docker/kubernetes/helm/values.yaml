@@ -1760,8 +1760,8 @@ localstack:
 externalDatabase:
   host: mongodb.local
   port: 27017
-  username: 'novu'
-  password: ''
+  username: 'TE@Admin'
+  password: '7r8h3e8Y$Q#A'
   database: novu-db
 
 ## @section External redis configuration
