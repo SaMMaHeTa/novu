@@ -18,10 +18,14 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - MONGO_INITDB_ROOT_USERNAME=TE@Admin
+      - MONGO_INITDB_ROOT_PASSWORD=7r8h3e8Y$Q#A
     volumes:
       - mongodb:/data/db
+      - mongod.conf.orig:/etc/mongod.conf.orig:
     ports:
       - 27017:27017
+    command: mongod --config /etc/mongod.conf.orig
   api:
     image: 'ghcr.io/novuhq/novu/api:0.16.0'
     depends_on:
