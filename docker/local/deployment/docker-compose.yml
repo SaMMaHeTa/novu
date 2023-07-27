@@ -18,14 +18,10 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - MONGO_INITDB_ROOT_USERNAME=TE@Admin
-      - MONGO_INITDB_ROOT_PASSWORD=7r8h3e8Y$Q#A
     volumes:
       - mongodb:/data/db
-      - mongod.conf.orig:/etc/mongod.conf.orig:
     ports:
       - 27017:27017
-    command: mongod --config /etc/mongod.conf.orig
   api:
     image: 'ghcr.io/novuhq/novu/api:0.16.0'
     depends_on:
@@ -130,7 +126,7 @@ services:
         max-size: '50m'
         max-file: '5'
     environment:
-      REACT_APP_API_URL: ${API_ROOT_URL}
+      REACT_APP_API_URL: http://94.250.201.139:3000
       REACT_APP_ENVIRONMENT: ${NODE_ENV}
       REACT_APP_WIDGET_EMBED_PATH: ${WIDGET_EMBED_PATH}
       REACT_APP_DOCKER_HOSTED_ENV: 'true'
