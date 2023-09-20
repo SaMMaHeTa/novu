@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { isBrowser } from '../utils';
 import { getContextPath, NovuComponentEnum } from '@novu/shared';
 
@@ -68,3 +69,4 @@ export const IS_MULTI_PROVIDER_CONFIGURATION_ENABLED = isCypress
   : window._env_.IS_MULTI_PROVIDER_CONFIGURATION_ENABLED ||
     process.env.IS_MULTI_PROVIDER_CONFIGURATION_ENABLED ||
     'false';
+/* eslint-enable */
