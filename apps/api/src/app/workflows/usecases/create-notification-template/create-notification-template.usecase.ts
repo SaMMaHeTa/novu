@@ -39,7 +39,7 @@ export class CreateNotificationTemplate {
     const command = blueprintCommand ?? usecaseCommand;
 
     const contentService = new ContentService();
-    const variables = contentService.extractMessageVariables(command.steps);
+    const { variables, reservedVariables } = contentService.extractMessageVariables(command.steps);
     const subscriberVariables = contentService.extractSubscriberMessageVariables(command.steps);
 
     const triggerIdentifier = `${slugify(command.name, {
@@ -59,6 +59,17 @@ export class CreateNotificationTemplate {
         return {
           name: i.name,
           type: i.type,
+        };
+      }),
+      reservedVariables: reservedVariables.map((i) => {
+        return {
+          type: i.type,
+          variables: i.variables.map((variable) => {
+            return {
+              name: variable.name,
+              type: variable.type,
+            };
+          }),
         };
       }),
       subscriberVariables: subscriberVariables.map((i) => {
@@ -131,6 +142,7 @@ export class CreateNotificationTemplate {
       triggers: [trigger],
       _notificationGroupId: command.notificationGroupId,
       blueprintId: command.blueprintId,
+      ...(command.data ? { data: command.data } : {}),
     });
 
     const item = await this.notificationTemplateRepository.findById(savedTemplate._id, command.environmentId);
@@ -197,7 +209,7 @@ export class CreateNotificationTemplate {
 
       const blueprintFeed = await this.feedRepository.findOne({
         _organizationId: this.getBlueprintOrganizationId,
-        id: step.template._feedId,
+        _id: step.template._feedId,
       });
 
       if (!blueprintFeed) {

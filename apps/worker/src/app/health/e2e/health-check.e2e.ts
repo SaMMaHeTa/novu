@@ -1,3 +1,4 @@
+import { InMemoryProviderEnum, InMemoryProviderService } from '@novu/application-generic';
 import { expect } from 'chai';
 import * as request from 'supertest';
 import * as defaults from 'superagent-defaults';
@@ -6,7 +7,10 @@ describe('Health-check', () => {
   let testAgent;
 
   before(async () => {
-    testAgent = defaults(request(`http://94.250.201.139:${process.env.PORT}`));
+    const inMemoryProviderService = new InMemoryProviderService(InMemoryProviderEnum.REDIS);
+    await inMemoryProviderService.delayUntilReadiness();
+
+    testAgent = defaults(request(`http://localhost:${process.env.PORT}`));
   });
 
   describe('/health-check (GET)', () => {
@@ -15,7 +19,7 @@ describe('Health-check', () => {
         body: { data },
       } = await testAgent.get('/v1/health-check');
 
-      expect(data.status).to.equal('ok');
+      expect(data?.status).to.equal('ok');
     });
   });
 });

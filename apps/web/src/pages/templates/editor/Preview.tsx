@@ -85,6 +85,7 @@ export const Preview = ({ activeStep, view }: { activeStep: number; view: string
       payload: processedVariables,
       layoutId,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentType, htmlContent, editorContent, processedVariables]);
   const theme = useMantineTheme();
 
@@ -94,10 +95,10 @@ export const Preview = ({ activeStep, view }: { activeStep: number; view: string
     }
     setIntegration(
       integrations.find((item) =>
-        isMultiProviderConfigEnabled ? item.channel === 'email' && item.selected : item.channel === 'email'
+        isMultiProviderConfigEnabled ? item.channel === 'email' && item.primary : item.channel === 'email'
       ) || null
     );
-  }, [integrations, setIntegration]);
+  }, [isMultiProviderConfigEnabled, integrations, setIntegration]);
 
   return (
     <>

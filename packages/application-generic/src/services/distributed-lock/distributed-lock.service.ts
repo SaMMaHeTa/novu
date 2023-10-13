@@ -4,12 +4,13 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import {
   InMemoryProviderClient,
+  InMemoryProviderEnum,
   InMemoryProviderService,
 } from '../in-memory-provider';
 
 const LOG_CONTEXT = 'DistributedLock';
 
-interface ILockOptions {
+export interface ILockOptions {
   resource: string;
   ttl: number;
 }
@@ -21,8 +22,11 @@ export class DistributedLockService {
   public lockCounter = {};
   public shuttingDown = false;
 
-  constructor(private inMemoryProviderService: InMemoryProviderService) {
-    this.startup(inMemoryProviderService.inMemoryProviderClient);
+  constructor(private inMemoryProviderService: InMemoryProviderService) {}
+
+  async initialize(): Promise<void> {
+    await this.inMemoryProviderService.delayUntilReadiness();
+    this.startup(this.inMemoryProviderService.inMemoryProviderClient);
   }
 
   public startup(
@@ -58,8 +62,8 @@ export class DistributedLockService {
        */
       this.distributedLock.on('error', (error) => {
         Logger.error(
-          'There has been an error in the Distributed Lock service',
           error,
+          'There has been an error in the Distributed Lock service',
           LOG_CONTEXT
         );
       });
@@ -99,6 +103,7 @@ export class DistributedLockService {
         } finally {
           this.shuttingDown = false;
           this.distributedLock = undefined;
+          await this.inMemoryProviderService.shutdown();
           Logger.verbose('Redlock shutdown', LOG_CONTEXT);
         }
       }

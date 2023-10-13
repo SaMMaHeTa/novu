@@ -1,22 +1,32 @@
+export interface IEvents {
+  trigger(workflowIdentifier: string, data: ITriggerPayloadOptions);
+  broadcast(workflowIdentifier: string, data: IBroadcastPayloadOptions);
+  bulkTrigger(events: IBulkEvents[]);
+  cancel(transactionId: string);
+}
+
 import {
   DigestUnitEnum,
   ITriggerPayload,
   TriggerRecipientSubscriber,
   TriggerRecipientsPayload,
+  ITenantDefine,
+  SmsProviderIdEnum,
 } from '@novu/shared';
 
 export interface IBroadcastPayloadOptions {
   payload: ITriggerPayload;
   overrides?: ITriggerOverrides;
+  tenant?: ITriggerTenant;
+  transactionId?: string;
 }
 
 export interface ITriggerPayloadOptions extends IBroadcastPayloadOptions {
   to: TriggerRecipientsPayload;
   actor?: TriggerRecipientSubscriber;
-  transactionId?: string;
 }
 export interface IIntegrationOverride {
-  integrationIdentifier: string;
+  integrationIdentifier?: string;
 }
 export interface IEmailOverrides extends IIntegrationOverride {
   to?: string[];
@@ -26,7 +36,10 @@ export interface IEmailOverrides extends IIntegrationOverride {
   cc?: string[];
   bcc?: string[];
   senderName?: string;
+  customData?: Record<string, Record<string, unknown>>;
 }
+
+export type ITriggerTenant = string | ITenantDefine;
 
 export type ITriggerOverrides = {
   [key in
@@ -45,9 +58,13 @@ export type ITriggerOverrides = {
 } & {
   [key in 'delay']?: ITriggerOverrideDelayAction;
 } & {
+  [key in 'layoutIdentifier']?: string;
+} & {
   [key in 'email']?: IEmailOverrides;
 } & {
-  [key in 'sms']?: IIntegrationOverride;
+  [key in 'sms']?: ITriggerOverrideSMS;
+} & {
+  [key in SmsProviderIdEnum]?: ITriggerOverrideSMS;
 };
 
 export type ITriggerOverrideDelayAction = {
@@ -69,7 +86,7 @@ export type ITriggerOverrideFCM = {
   clickAction?: string;
   titleLocKey?: string;
   titleLocArgs?: string;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 };
 
 export type IAPNSAlert = {
@@ -111,6 +128,12 @@ export type ITriggerOverrideAPNS = {
   mutableContent?: boolean;
   mdm?: string | Record<string, unknown>;
   urlArgs?: string[];
+};
+
+export type ITriggerOverrideSMS = {
+  to?: string;
+  content?: string;
+  from?: string;
 };
 
 export type ITriggerOverrideExpo = {

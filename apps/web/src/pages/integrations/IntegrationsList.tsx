@@ -18,6 +18,7 @@ import { IntegrationStatusCell } from './components/IntegrationStatusCell';
 import { When } from '../../components/utils/When';
 import { IntegrationsListNoData } from './components/IntegrationsListNoData';
 import { mapToTableIntegration } from './utils';
+import { ConditionCell } from './components/ConditionCell';
 
 const columns: IExtendedColumn<ITableIntegration>[] = [
   {
@@ -50,6 +51,13 @@ const columns: IExtendedColumn<ITableIntegration>[] = [
     Cell: IntegrationEnvironmentCell,
   },
   {
+    accessor: 'conditions',
+    Header: 'Condition',
+    width: 100,
+    maxWidth: 100,
+    Cell: ConditionCell,
+  },
+  {
     accessor: 'active',
     Header: 'Status',
     width: 125,
@@ -79,17 +87,13 @@ export const IntegrationsList = ({
   }, [integrations, environments]);
 
   return (
-    <PageContainer
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-      title="Integrations"
-    >
+    <PageContainer title="Integrations">
       <PageHeader title="Integrations Store" />
-      <Container fluid sx={{ padding: '0 30px 8px 30px' }}>
-        <IntegrationsListToolbar onAddProviderClick={onAddProviderClick} areIntegrationsLoading={isLoading} />
-      </Container>
+      <When truthy={hasIntegrations}>
+        <Container fluid sx={{ padding: '0 30px 8px 30px' }}>
+          <IntegrationsListToolbar onAddProviderClick={onAddProviderClick} areIntegrationsLoading={isLoading} />
+        </Container>
+      </When>
       <When truthy={hasIntegrations || isLoading}>
         <Table
           onRowClick={onRowClickCallback}
@@ -98,11 +102,11 @@ export const IntegrationsList = ({
           columns={columns}
           data={data}
         />
-        {withOutlet && <Outlet />}
       </When>
       <When truthy={!hasIntegrations && !isLoading}>
         <IntegrationsListNoData onChannelClick={onChannelClick} />
       </When>
+      {withOutlet && <Outlet />}
     </PageContainer>
   );
 };
