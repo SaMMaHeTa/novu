@@ -40,7 +40,7 @@ services:
         max-file: '5'
     environment:
       NODE_ENV: ${NODE_ENV}
-      API_ROOT_URL: 'https://novuapi.techextensor.com'
+      API_ROOT_URL: 'http://192.168.10.5:3000'
       MAIL_SERVER_DOMAIN: ${MAIL_SERVER_DOMAIN}
       DISABLE_USER_REGISTRATION: ${DISABLE_USER_REGISTRATION}
       PORT: ${API_PORT}
