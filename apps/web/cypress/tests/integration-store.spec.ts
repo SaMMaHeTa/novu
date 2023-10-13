@@ -180,7 +180,7 @@ describe.skip('Integration store page', function () {
 
       cy.getByTestId('from').should('have.value', 'cypress-nodemailer');
       cy.getByTestId('senderName').should('have.value', 'cypress-novu');
-      cy.getByTestId('host').should('have.value', '94.250.201.139.novu.co');
+      cy.getByTestId('host').should('have.value', '192.168.10.5.novu.co');
     });
   });
 });
@@ -212,7 +212,7 @@ function interceptNodemailerIntegration(isActive: boolean) {
         credentials: {
           from: 'cypress-nodemailer',
           senderName: 'cypress-novu',
-          host: '94.250.201.139.novu.co',
+          host: '192.168.10.5.novu.co',
           port: 587,
           secure: true,
           requireTls: true,

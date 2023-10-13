@@ -149,31 +149,10 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      
     }
   },
-  "lint-staged": {
-    "apps/**/*.{ts,tsx,json}": [
-      "prettier --ignore-path ./.prettierignore --write",
-      "eslint",
-      "stop-only --file"
-    ],
-    "packages/**/*.{ts,tsx,json}": [
-      "prettier --ignore-path ./.prettierignore --write",
-      "eslint",
-      "stop-only --file"
-    ],
-    "providers/**/*.{ts,json}": [
-      "prettier --ignore-path ./.prettierignore --write",
-      "eslint",
-      "stop-only --file"
-    ],
-    "libs/**/*.{ts,js,json}": [
-      "prettier --ignore-path ./.prettierignore --write",
-      "eslint",
-      "stop-only --file"
-    ]
-  },
+  
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

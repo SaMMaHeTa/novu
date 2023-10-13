@@ -9,7 +9,7 @@ export class NotificationsService {
 
   async triggerEvent(name: string, subscriberId: string, payload = {}) {
     await axios.post(
-      'http://94.250.201.139:1336/v1/events/trigger',
+      'http://192.168.10.5:1336/v1/events/trigger',
       {
         name,
         to: subscriberId,

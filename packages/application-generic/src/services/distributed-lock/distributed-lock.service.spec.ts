@@ -11,7 +11,7 @@ import {
 } from '../in-memory-provider';
 
 const originalRedisCacheServiceHost = (process.env.REDIS_CACHE_SERVICE_HOST =
-  process.env.REDIS_CACHE_SERVICE_HOST ?? '94.250.201.139');
+  process.env.REDIS_CACHE_SERVICE_HOST ?? '192.168.10.5');
 const originalRedisCacheServicePort = (process.env.REDIS_CACHE_SERVICE_PORT =
   process.env.REDIS_CACHE_SERVICE_PORT ?? '6379');
 const originalRedisClusterServiceHost = process.env.REDIS_CLUSTER_SERVICE_HOST;

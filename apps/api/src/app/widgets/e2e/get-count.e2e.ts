@@ -356,7 +356,7 @@ describe('Count - GET /widget/notifications/count', function () {
   });
 
   async function getFeedCount(query = {}) {
-    const response = await axios.get(`http://94.250.201.139:${process.env.PORT}/v1/widgets/notifications/count`, {
+    const response = await axios.get(`http://192.168.10.5:${process.env.PORT}/v1/widgets/notifications/count`, {
       params: {
         ...query,
       },
