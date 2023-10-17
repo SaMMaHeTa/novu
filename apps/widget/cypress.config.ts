@@ -6,7 +6,7 @@ export default defineConfig({
   projectId: 'kedzap',
   env: {
     NODE_ENV: 'test',
-    API_URL: 'http://94.250.201.139:1336',
+    API_URL: 'http://185.100.212.51:1336',
   },
   e2e: {
     /*
@@ -17,7 +17,7 @@ export default defineConfig({
       // eslint-disable-next-line import/extensions
       return require('./cypress/plugins/index.ts')(on, config);
     },
-    baseUrl: 'http://94.250.201.139:3500',
+    baseUrl: 'http://185.100.212.51:3500',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
   },
 });

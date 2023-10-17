@@ -257,7 +257,7 @@ const Body = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const res = await axios.post('http://94.250.201.139:3000/api/v1/sending-digest', { name });
+    const res = await axios.post('http://185.100.212.51:3000/api/v1/sending-digest', { name });
     setName('');
   };
   const onChangeHandler = (e) => {

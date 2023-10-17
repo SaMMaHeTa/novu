@@ -38,7 +38,7 @@ describe('Get Unseen Count - /:subscriberId/notifications/unseen (GET)', functio
 
 async function getUnSeenCount(subscriberId: string, apiKey: string, query = {}) {
   const response = await axios.get(
-    `http://94.250.201.139:${process.env.PORT}/v1/subscribers/${subscriberId}/notifications/unseen`,
+    `http://185.100.212.51:${process.env.PORT}/v1/subscribers/${subscriberId}/notifications/unseen`,
     {
       params: {
         ...query,
