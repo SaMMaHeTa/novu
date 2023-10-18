@@ -396,6 +396,7 @@ export class MessageRepository extends BaseRepository<MessageDBModel, MessageEnt
     const data = await this.MongooseModel.find(query, select, {
       limit: options?.limit,
       skip: options?.skip,
+      sort: { createdAt: -1 },
     })
       .populate('subscriber', '_id firstName lastName avatar subscriberId')
       .populate('actorSubscriber', '_id firstName lastName avatar subscriberId');
