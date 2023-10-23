@@ -40,8 +40,8 @@ export class GetFeedCount {
         feedId: command.feedId,
         seen: command.seen,
         read: command.read,
-      },
-      { limit: command.limit }
+      }
+      // ,{ limit: command.limit }
     );
 
     return { count };
