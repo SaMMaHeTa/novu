@@ -41,7 +41,7 @@ export class GetFeedCount {
         seen: command.seen,
         read: command.read,
       }
-      // ,{ limit: command.limit }
+      // ,{ limit: command.limit}
     );
 
     return { count };

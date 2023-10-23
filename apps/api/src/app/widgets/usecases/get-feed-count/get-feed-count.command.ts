@@ -21,7 +21,7 @@ export class GetFeedCountCommand extends EnvironmentWithSubscriber {
 
     return value;
   })
-  @Min(1)
-  @Max(1000)
-  limit: number;
+  
+  @IsOptional()  
+  limit?: number;
 }
