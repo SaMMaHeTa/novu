@@ -172,8 +172,7 @@ export class WidgetsController {
       subscriberId: subscriberSession.subscriberId,
       environmentId: subscriberSession._environmentId,
       feedId: feedsQuery,
-      read,
-      limit,
+      read
     });
 
     return await this.getFeedCountUsecase.execute(command);

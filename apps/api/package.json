@@ -10,7 +10,8 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "precommit": "lint-staged",
-    "docker:build": "pnpm --silent --workspace-root pnpm-context -- apps/api/Dockerfile | docker buildx build -t novu-api --build-arg PACKAGE_PATH=apps/api -",
+    "docker:build": "pnpm --silent --workspace-root pnpm-context -- apps/api/Dockerfile | docker build -t novu-api --build-arg PACKAGE_PATH=apps/api -",
+    "docker:build2": "pnpm --silent --workspace-root pnpm-context -- apps/api/Dockerfile | docker buildx build -t novu-api --build-arg PACKAGE_PATH=apps/api -",
     "docker:build:depot": "pnpm --silent --workspace-root pnpm-context -- apps/api/Dockerfile | depot build --build-arg PACKAGE_PATH=apps/api - -t novu-api --load",
     "start": "pnpm start:dev",
     "start:dev": "cross-env TZ=UTC nest start --watch",
@@ -111,11 +112,5 @@
   },
   "optionalDependencies": {
     "@novu/ee-auth": "^0.19.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint"
-    ]
-  }
-  
+  } 
 }
