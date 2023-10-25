@@ -75,7 +75,7 @@ describe('Unseen Count - GET /widget/notifications/unseen', function () {
     expect(messages[0].seen).to.equal(false);
 
     await axios.post(
-      `http://192.168.10.152:${process.env.PORT}/v1/widgets/messages/markAs`,
+      `http://172.17.0.2:${process.env.PORT}/v1/widgets/messages/markAs`,
       { messageId, mark: { seen: true } },
       {
         headers: {
@@ -178,7 +178,7 @@ describe('Unseen Count - GET /widget/notifications/unseen', function () {
     });
 
     await axios.post(
-      `http://192.168.10.152:${process.env.PORT}/v1/widgets/messages/markAs`,
+      `http://172.17.0.2:${process.env.PORT}/v1/widgets/messages/markAs`,
       { messageId, mark: { seen: true } },
       {
         headers: {

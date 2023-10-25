@@ -1565,10 +1565,10 @@ web:
 
   ## @param web.apiExternalEndpoint The external endpoint of the API
   ##
-  apiExternalEndpoint: http://192.168.10.152:3000
+  apiExternalEndpoint: http://172.17.0.2:3000
 
   ## @param web.wsExternalEndpoint The external websocket endpoint of the API
-  wsExternalEndpoint: ws://192.168.10.152:3002
+  wsExternalEndpoint: ws://172.17.0.2:3002
 
 ## @section Persistence Parameters
 ##

@@ -7,7 +7,7 @@ describe('Debugging - test trigger', function () {
     const template = this.session.templates[0];
     const userId = this.session.user.id;
 
-    cy.intercept('GET', 'http://192.168.10.152:1336/v1/notification-templates/*').as('notification-templates');
+    cy.intercept('GET', 'http://172.17.0.2:1336/v1/notification-templates/*').as('notification-templates');
 
     cy.waitLoadTemplatePage(() => {
       cy.visit('/workflows/edit/' + template._id);
