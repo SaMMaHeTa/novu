@@ -51,7 +51,7 @@ describe('Mark all as read - /widgets/messages/seen (POST)', function () {
     expect(unseenMessagesBefore.data.count).to.equal(3);
 
     await axios.post(
-      `http://172.17.0.2:${process.env.PORT}/v1/widgets/messages/seen`,
+      `http://192.168.10.153:${process.env.PORT}/v1/widgets/messages/seen`,
       {},
       {
         headers: {
@@ -76,7 +76,7 @@ describe('Mark all as read - /widgets/messages/seen (POST)', function () {
     expect(unseenMessagesBefore.data.count).to.equal(3);
 
     await axios.post(
-      `http://172.17.0.2:${process.env.PORT}/v1/widgets/messages/read`,
+      `http://192.168.10.153:${process.env.PORT}/v1/widgets/messages/read`,
       {},
       {
         headers: {
@@ -91,7 +91,7 @@ describe('Mark all as read - /widgets/messages/seen (POST)', function () {
   });
 
   async function getFeedCount(query = {}) {
-    const response = await axios.get(`http://172.17.0.2:${process.env.PORT}/v1/widgets/notifications/unseen`, {
+    const response = await axios.get(`http://192.168.10.153:${process.env.PORT}/v1/widgets/notifications/unseen`, {
       params: {
         ...query,
       },
@@ -104,7 +104,7 @@ describe('Mark all as read - /widgets/messages/seen (POST)', function () {
   }
 
   async function getNotificationCount(query: string) {
-    const response = await axios.get(`http://172.17.0.2:${process.env.PORT}/v1/widgets/notifications/count?${query}`, {
+    const response = await axios.get(`http://192.168.10.153:${process.env.PORT}/v1/widgets/notifications/count?${query}`, {
       headers: {
         Authorization: `Bearer ${subscriberToken}`,
       },

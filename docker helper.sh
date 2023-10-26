@@ -55,6 +55,8 @@ db.createUser(
 {
 "user": "TE@Admin",
 "pwd": "7r8h3e8Y$Q#A",
-"roles": [ { role: "userAdminAnyDatabase", db: "admin" } ]
+"roles": [ { role: "userAdminAnyDatabase", db: "admin" }, 
+             { role: "dbAdminAnyDatabase", db: "admin" }, 
+             { role: "readWriteAnyDatabase", db: "admin" }  ]
 }
 )

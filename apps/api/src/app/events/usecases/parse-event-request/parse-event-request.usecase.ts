@@ -118,7 +118,8 @@ export class ParseEventRequest {
       actor: command.actor,
       transactionId,
     };
-    await this.workflowQueueService.add(transactionId, jobData, command.organizationId);
+    var resAdd = await this.workflowQueueService.add(transactionId, jobData, command.organizationId);
+    console.log("res Insert::",resAdd)
 
     return {
       acknowledged: true,
