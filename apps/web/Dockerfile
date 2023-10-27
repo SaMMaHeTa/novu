@@ -1,5 +1,5 @@
 # start build stage
-# FROM nikolaik/python-nodejs:python3.10-nodejs16-alpine as builder
+#FROM nikolaik/python-nodejs:python3.10-nodejs16-alpine as builder
 FROM nikolaik/python-nodejs:python3.10-nodejs16 as builder
 
 ENV NX_DAEMON=false

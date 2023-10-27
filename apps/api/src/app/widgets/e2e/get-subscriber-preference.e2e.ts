@@ -88,7 +88,7 @@ describe('GET /widget/preferences', function () {
 });
 
 export async function getSubscriberPreference(subscriberToken: string) {
-  return await axios.get(`http://192.168.10.153:${process.env.PORT}/v1/widgets/preferences`, {
+  return await axios.get(`http://192.168.29.210:${process.env.PORT}/v1/widgets/preferences`, {
     headers: {
       Authorization: `Bearer ${subscriberToken}`,
     },

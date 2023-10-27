@@ -29,7 +29,7 @@ cp .env.example ./local/deployment/.env
 docker-compose -f ./local/deployment/docker-compose.yml up
 ```
 
-Now visit [http://192.168.10.153:4200](http://192.168.10.153:4200) to start using Novu.
+Now visit [http://192.168.29.210:4200](http://192.168.29.210:4200) to start using Novu.
 
 ### Securing your setup
 
@@ -45,8 +45,8 @@ Update the `.env` file with your own secrets. In particular, these are required:
 
 Redis TLS can be configured by adding the following variables to the `.env` file and specifying the necessary properties inside:
 
-- `REDIS_TLS={"servername":"192.168.10.153"}`
-- `REDIS_CACHE_SERVICE_TLS={"servername":"192.168.10.153"}`
+- `REDIS_TLS={"servername":"192.168.29.210"}`
+- `REDIS_CACHE_SERVICE_TLS={"servername":"192.168.29.210"}`
 
 ## Configuration
 
