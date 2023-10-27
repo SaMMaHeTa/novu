@@ -103,7 +103,7 @@ module.exports = (on, config) => {
       const dal = new DalService();
       await dal.connect('mongodb://localhost:27017/novu-test');
 
-      const session = new UserSession('http://localhost:1336');
+      const session = new UserSession('http://192.168.10.5:1336');
       await session.initialize({
         noEnvironment: settings?.noEnvironment,
         showOnBoardingTour: settings?.showOnBoardingTour,

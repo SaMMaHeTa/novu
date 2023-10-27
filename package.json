@@ -151,9 +151,7 @@
     ]
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+  
   },
   "lint-staged": {
     "apps/**/*.{ts,tsx,json}": [

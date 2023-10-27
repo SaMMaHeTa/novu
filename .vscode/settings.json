@@ -4,7 +4,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
@@ -12,9 +11,7 @@
   "css.validate": false,
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 120,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  },
+  
   "cSpell.words": ["mantine"],
   "vsicons.presets.nestjs": true
 }
