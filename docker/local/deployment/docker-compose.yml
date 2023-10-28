@@ -10,6 +10,9 @@ services:
     image: mongo
     container_name: mongodb
     restart: unless-stopped
+    env_file:
+      - mongo.env
+    command: [ --auth ]
     logging:
       driver: 'json-file'
       options:
