@@ -37,7 +37,7 @@ services:
         max-file: '5'
     environment:
       NODE_ENV: ${NODE_ENV}
-      API_ROOT_URL: ${API_ROOT_URL}
+      API_ROOT_URL: 'https://novuapi.techextensor.com'
       DISABLE_USER_REGISTRATION: ${DISABLE_USER_REGISTRATION}
       PORT: ${API_PORT}
       FRONT_BASE_URL: ${FRONT_BASE_URL}
