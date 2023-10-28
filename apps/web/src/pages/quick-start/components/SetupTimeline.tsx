@@ -87,7 +87,7 @@ export const SetupTimeline = ({
 
       <When truthy={framework === 'demo'}>
         <span style={{ color: colors.B60 }}>
-          If your browser did not automatically open, go to localhost at http://localhost:3000
+          If your browser did not automatically open, go to 94.250.201.139 at http://94.250.201.139:3000
         </span>
       </When>
     </Stack>

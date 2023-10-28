@@ -34,13 +34,13 @@ export default defineConfig({
       // eslint-disable-next-line import/extensions
       return require('./cypress/plugins/index.ts')(on, config);
     },
-    baseUrl: 'http://localhost:4200',
+    baseUrl: 'http://94.250.201.139:4200',
     specPattern: 'cypress/tests/**/*.{js,jsx,ts,tsx}',
   },
 
   env: {
     NODE_ENV: 'test',
-    apiUrl: 'http://localhost:1336',
+    apiUrl: 'http://94.250.201.139:1336',
     GITHUB_USER_EMAIL: '',
     GITHUB_USER_PASSWORD: '',
     BLUEPRINT_CREATOR: '645b648b36dd6d25f8650d37',
