@@ -301,7 +301,7 @@ describe('Distributed Lock Service', () => {
 
       inMemoryProviderService = new InMemoryProviderService(undefined);
       expect(inMemoryProviderService.inMemoryProviderConfig.host).toEqual(
-        'localhost'
+        '94.250.201.139'
       );
       distributedLockService = new DistributedLockService(undefined);
       // If no initializing the service is like the client is not properly set

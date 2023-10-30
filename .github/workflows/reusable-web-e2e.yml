@@ -85,7 +85,7 @@ jobs:
           cd apps/ws && pnpm start:test &
 
       - name: Wait on Services
-        run: wait-on --timeout=180000 http://localhost:1340/v1/health-check http://localhost:4200
+        run: wait-on --timeout=180000 http://94.250.201.139:1340/v1/health-check http://94.250.201.139:4200
 
       # run cypress install only when cache was not hit
       - name: Cypress install
@@ -100,7 +100,7 @@ jobs:
           echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
       - name: Cypress run e2e
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         env:
           NODE_ENV: test
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -111,7 +111,7 @@ jobs:
         with:
           working-directory: apps/web
           browser: "${{ env.BROWSER_PATH }}"
-          record: true
+          record: false
           parallel: false
           install: false
           config-file: cypress.config.ts
@@ -148,7 +148,7 @@ jobs:
         run: pnpm cypress install
 
       - name: Run Component tests 🧪
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         env:
           NODE_ENV: test
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -93,4 +93,5 @@ export default {
   'f24185ef': [() => import(/* webpackChunkName: 'f24185ef' */ '@site/docs/notification-center/vue-component.md'), '@site/docs/notification-center/vue-component.md', require.resolveWeak('@site/docs/notification-center/vue-component.md')],
   'f4971f11': [() => import(/* webpackChunkName: 'f4971f11' */ '@site/docs/community/faq.md'), '@site/docs/community/faq.md', require.resolveWeak('@site/docs/community/faq.md')],
   'f535bd73': [() => import(/* webpackChunkName: 'f535bd73' */ '@site/docs/platform/subscribers.md'), '@site/docs/platform/subscribers.md', require.resolveWeak('@site/docs/platform/subscribers.md')],
-  'fdb5c0a5': [() => import(/* webpackChunkName: 'fdb5c0a5' */ '@site/docs/overview/quickstart/get-started-with-dotnet.md'), '@site/docs/overview/quickstart/get-started-with-dotnet.md', require.resolveWeak('@site/docs/overview/quickstart/get-started-with-dotnet.md')],};
+  'fdb5c0a5': [() => import(/* webpackChunkName: 'fdb5c0a5' */ '@site/docs/overview/quickstart/get-started-with-dotnet.md'), '@site/docs/overview/quickstart/get-started-with-dotnet.md', require.resolveWeak('@site/docs/overview/quickstart/get-started-with-dotnet.md')],
+};

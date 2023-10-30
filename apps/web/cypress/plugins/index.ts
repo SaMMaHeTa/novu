@@ -99,7 +99,7 @@ module.exports = (on, config) => {
       organizationId: string;
     }) {
       const dal = new DalService();
-      await dal.connect('mongodb://localhost:27017/novu-test');
+      await dal.connect('mongodb://94.250.201.139:27017/novu-test');
 
       const repository = new IntegrationRepository();
 
