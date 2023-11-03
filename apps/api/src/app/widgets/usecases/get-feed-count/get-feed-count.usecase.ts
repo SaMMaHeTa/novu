@@ -35,7 +35,7 @@ export class GetFeedCount {
     const count = await this.messageRepository.getCount(
       command.environmentId,
       subscriber._id,
-      ChannelTypeEnum.IN_APP,
+      command.channel,
       {
         feedId: command.feedId,
         seen: command.seen,

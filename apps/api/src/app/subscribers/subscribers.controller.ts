@@ -22,7 +22,7 @@ import {
   UpdateSubscriberCommand,
 } from '@novu/application-generic';
 import { ApiOperation, ApiTags, ApiNoContentResponse, ApiParam } from '@nestjs/swagger';
-import { ButtonTypeEnum, ChatProviderIdEnum, IJwtPayload } from '@novu/shared';
+import { ChannelTypeEnum, ButtonTypeEnum, ChatProviderIdEnum, IJwtPayload } from '@novu/shared';
 import { MessageEntity, PreferenceLevelEnum } from '@novu/dal';
 
 import { RemoveSubscriber, RemoveSubscriberCommand } from './usecases/remove-subscriber';
@@ -467,6 +467,7 @@ export class SubscribersController {
     @UserSession() user: IJwtPayload,
     @Query('feedIdentifier') feedId: string[] | string,
     @Query('seen') seen: boolean,
+    @Query('channel', new DefaultValuePipe(ChannelTypeEnum.IN_APP)) channel: ChannelTypeEnum,
     @Param('subscriberId') subscriberId: string,
     @Query('limit', new DefaultValuePipe(100)) limit: number
   ): Promise<UnseenCountResponse> {
@@ -484,6 +485,7 @@ export class SubscribersController {
       organizationId: user.organizationId,
       subscriberId: subscriberId,
       environmentId: user.environmentId,
+      channel:channel,
       feedId: feedsQuery,
       seen,
       limit,
