@@ -12,9 +12,7 @@ jobs:
         name: [ 'novu/ws-ee', 'novu/ws' ]
     uses: ./.github/workflows/reusable-ws-e2e.yml
     with:
-      ee: ${{ contains (matrix.name,'ee') }}
-      submodules: ${{ contains (matrix.name,'ee') }}
-      submodule_branch: 'main'
+      ee: ${{ contains (matrix.name,'-ee') }}
     secrets: inherit
 
   # This workflow contains a single job called "build"
@@ -32,7 +30,12 @@ jobs:
       docker_image: ${{ steps.build-image.outputs.IMAGE }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: ${{ contains (matrix.name,'-ee') }}
+          token: ${{ secrets.SUBMODULES_TOKEN }}
       - uses: ./.github/actions/setup-project
+        with:
+          submodules: ${{ contains (matrix.name,'-ee') }}
 
       - name: Set Bull MQ Env variable for EE
         if: contains(matrix.name, 'ee')

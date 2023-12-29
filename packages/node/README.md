@@ -27,7 +27,7 @@ The ultimate service for managing multi-channel notifications with a single API.
     ·
     <a href="https://github.com/orgs/novuhq/projects/10">Roadmap</a>
     ·
-    <a href="https://twitter.com/novuhq">Twitter</a>
+    <a href="https://twitter.com/novuhq">X</a>
     ·
     <a href="https://notifications.directory">Notifications Directory</a>.
     <a href="https://novu.co/blog">Read our blog</a>
@@ -152,7 +152,9 @@ Novu provides a single API to manage providers across multiple channels with a s
 - [Environments](#environments)
 - [Layouts](#layouts)
 - [Integrations](#integrations)
-
+- [Organizations](#organizations)
+- [Inbound Parse](#inbound-parse)
+- [Execution Details](#execution-details)
 
 ### Subscribers
 
@@ -170,27 +172,29 @@ await novu.subscribers.list(page,limit)
 ```
 
 - #### Identify (create) a new subscriber
+
 ```ts
 import { Novu } from '@novu/node';
 
 const novu = new Novu('<NOVU_API_KEY>');
 
-await novu.subscribers.identify("subscriberId",{
-  firstName: "Pawan";
-  lastName: "Jain";
-  email: "pawan.jain@domain.com";
-  phone: "+1234567890";
-  avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-  locale: "en-US";
+await novu.subscribers.identify("subscriberId", {
+  firstName: "Pawan",
+  lastName: "Jain",
+  email: "pawan.jain@domain.com",
+  phone: "+1234567890",
+  avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+  locale: "en-US",
   data: {
-    isDeveloper : true
+    isDeveloper: true,
     customKey: "customValue"
-  };
-})
+  }
+});
 ```
 
 
 - #### Bulk create subscribers
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -198,28 +202,28 @@ const novu = new Novu('<NOVU_API_KEY>');
 
 await novu.subscribers.identify([
   {
-    subscriberId: "1"
-    firstName: "Pawan";
-    lastName: "Jain";
-    email: "pawan.jain@domain.com";
-    phone: "+1234567890";
-    avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-    locale: "en-US";
+    subscriberId: "1",
+    firstName: "Pawan",
+    lastName: "Jain",
+    email: "pawan.jain@domain.com",
+    phone: "+1234567890",
+    avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+    locale: "en-US",
     data: {
-      isDeveloper : true
+      isDeveloper : true,
       customKey: "customValue"
     };
   },
   {
-    subscriberId: "2"
-    firstName: "John";
-    lastName: "Doe";
-    email: "john.doe@domain.com";
-    phone: "+1234567891";
-    avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-    locale: "en-UK";
+    subscriberId: "2",
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@domain.com",
+    phone: "+1234567891",
+    avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+    locale: "en-UK",
     data: {
-      isDeveloper : false
+      isDeveloper : false,
       customKey1: "customValue1"
     };
   }
@@ -229,6 +233,7 @@ await novu.subscribers.identify([
 
 
 - #### Get a single subscriber
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -245,21 +250,22 @@ import { Novu } from '@novu/node';
 const novu = new Novu('<NOVU_API_KEY>');
 
 await novu.subscribers.update("subscriberId",{
-  firstName: "Pawan";
-  lastName: "Jain";
-  email: "pawan.jain@domain.com";
-  phone: "+1234567890";
-  avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-  locale: "en-US";
+  firstName: "Pawan",
+  lastName: "Jain",
+  email: "pawan.jain@domain.com",
+  phone: "+1234567890",
+  avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+  locale: "en-US",
   data: {
-    isDeveloper : true
-    customKey: "customValue"
+    isDeveloper : true,
+    customKey: "customValue",
     customKey2: "customValue2"
   };
 })
 ```
 
 - #### Update provider credentials
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -274,9 +280,15 @@ await novu.subscribers.setCredentials("subscriberId", "fcm", {
 await novu.subscribers.setCredentials("subscriberId", "slack", {
   webhookUrl: ["webhookUrl"]
 })
+
+// update slack weebhook for a subscriberId with selected integration
+await novu.subscribers.setCredentials("subscriberId", "slack", {
+  webhookUrl: ["webhookUrl"]
+ }, "slack_identifier" )
 ```
 
 - #### Delete provider credentials
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -311,6 +323,7 @@ await novu.subscribers.updateOnlineStatus("subscriberId", false)
 ```
 
 - #### Get subscriber preference for all workflows
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -320,6 +333,7 @@ await novu.subscribers.getPreference("subscriberId")
 ```
 
 - #### Get subscriber global preference
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -330,6 +344,7 @@ await novu.subscribers.getGlobalPreference("subscriberId" )
 
 
 - #### Get subscriber preference by level
+
 ```ts
 import { Novu, PreferenceLevelEnum } from '@novu/node';
 
@@ -340,7 +355,9 @@ await novu.subscribers.getPreferenceByLevel("subscriberId", PreferenceLevelEnum.
 // Get template level preference
 await novu.subscribers.getPreferenceByLevel("subscriberId", PreferenceLevelEnum.TEMPLATE)
 ```
+
 - #### Update subscriber preference for a workflow
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -349,7 +366,7 @@ const novu = new Novu('<NOVU_API_KEY>');
 // enable in-app channel
 await novu.subscribers.updatePreference("subscriberId", "workflowId", {
   channel: {
-    type: "in_app"
+    type: "in_app",
     enabled: true
   }
 })
@@ -358,13 +375,14 @@ await novu.subscribers.updatePreference("subscriberId", "workflowId", {
 // disable email channel
 await novu.subscribers.updatePreference("subscriberId", "workflowId", {
   channel: {
-    type: "email"
+    type: "email",
     enabled: false
   }
 })
 ```
 
 - #### Update subscriber preference globally
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -374,10 +392,10 @@ const novu = new Novu('<NOVU_API_KEY>');
 await novu.subscribers.updateGlobalPreference("subscriberId", {
   enabled: true,
   preferences: [{
-    type: "in_app"
+    type: "in_app",
     enabled: true
   }, {
-    type: "email"
+    type: "email",
     enabled: false
   }]
 })
@@ -391,21 +409,22 @@ import { Novu } from '@novu/node';
 const novu = new Novu('<NOVU_API_KEY>');
 
 const params = {
-  page: 0;
-  limit: 20;
+  page: 0,
+  limit: 20,
   // copy this value from in-app editor
-  feedIdentifier: "feedId";
-  seen: true
-  read: false
+  feedIdentifier: "feedId",
+  seen: true,
+  read: false,
   payload: {
     "customkey": "customValue"
-  }
+  };
 }
 
 await novu.subscribers.getNotificationsFeed("subscriberId", params);
 ```
 
 - #### Get seen/unseen in-app messages (notifications) count
+
 ```ts
 import { Novu } from '@novu/node';
 
@@ -479,7 +498,7 @@ import { Novu } from '@novu/node';
 const novu = new Novu('<NOVU_API_KEY>');
 
 // trigger to existing subscribers
-await novu.subscribers.trigger("workflowIdentifier", {
+await novu.events.trigger("workflowIdentifier", {
   to: "subscriberId",
   payload: {
     customKey: "customValue",
@@ -497,28 +516,28 @@ await novu.subscribers.trigger("workflowIdentifier", {
     }
   },
   // actorId is subscriberId of actor
-  actor: "actorId"
+  actor: "actorId",
   tenant: "tenantIdentifier"
 });
 
 // create new subscriber inline with trigger
-await novu.subscribers.trigger("workflowIdentifier", {
+await novu.events.trigger("workflowIdentifier", {
   to: {
-    subscriberId: "1"
-    firstName: "Pawan";
-    lastName: "Jain";
-    email: "pawan.jain@domain.com";
-    phone: "+1234567890";
-    avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-    locale: "en-US";
+    subscriberId: "1",
+    firstName: "Pawan",
+    lastName: "Jain",
+    email: "pawan.jain@domain.com",
+    phone: "+1234567890",
+    avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+    locale: "en-US",
     data: {
-      isDeveloper : true
+      isDeveloper : true,
       customKey: "customValue"
     };
   },
   payload: {},
   overrides:{} ,
-  actor: "actorId"
+  actor: "actorId",
   tenant: "tenantIdentifier"
 });
 ```
@@ -530,53 +549,54 @@ import { Novu } from '@novu/node';
 
 const novu = new Novu('<NOVU_API_KEY>');
 
-await novu.subscribers.trigger("workflowIdentifier", {
+await novu.events.trigger("workflowIdentifier", {
   to: [ "subscriberId1" , "subscriberId2" ],
   payload: {},
   overrides:{} ,
-  actor: "actorId"
+  actor: "actorId",
   tenant: "tenantIdentifier"
 });
 
 
 // create new subscribers inline with trigger
-await novu.subscribers.trigger("workflowIdentifier", {
+await novu.events.trigger("workflowIdentifier", {
   to: [
     {
-      subscriberId: "1"
-      firstName: "Pawan";
-      lastName: "Jain";
-      email: "pawan.jain@domain.com";
-      phone: "+1234567890";
-      avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-      locale: "en-US";
+      subscriberId: "1",
+      firstName: "Pawan",
+      lastName: "Jain",
+      email: "pawan.jain@domain.com",
+      phone: "+1234567890",
+      avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+      locale: "en-US",
       data: {
-        isDeveloper : true
+        isDeveloper : true,
         customKey: "customValue"
       };
     },
     {
-      subscriberId: "2"
-      firstName: "John";
-      lastName: "Doe";
-      email: "john.doe@domain.com";
-      phone: "+1234567891";
-      avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x";
-      locale: "en-UK";
+      subscriberId: "2",
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@domain.com",
+      phone: "+1234567891",
+      avatar: "https://gravatar.com/avatar/553b157d82ac2880237566d5a644e5fe?s=400&d=robohash&r=x",
+      locale: "en-UK",
       data: {
-        isDeveloper : false
+        isDeveloper : false,
         customKey1: "customValue1"
       };
     }
   ],
   payload: {},
   overrides:{} ,
-  actor: "actorId"
+  actor: "actorId",
   tenant: "tenantIdentifier"
 });
 ```
 
 - #### Trigger to a topic
+
 ```ts
 import { Novu, TriggerRecipientsTypeEnum } from '@novu/node';
 
@@ -584,8 +604,8 @@ const novu = new Novu('<NOVU_API_KEY>');
 
 await novu.events.trigger("workflowIdentifier", {
   to: {
-    type: TriggerRecipientsTypeEnum.TOPIC;
-    topicKey: TopicKey;
+    type: TriggerRecipientsTypeEnum.TOPIC,
+    topicKey: TopicKey
   }
 })
 ```
@@ -599,7 +619,7 @@ import { Novu } from '@novu/node';
 
 const novu = new Novu('<NOVU_API_KEY>');
 
-await novu.subscribers.bulkTrigger([
+await novu.events.bulkTrigger([
   {
     name: "workflowIdentifier_1",
     to: "subscriberId_1",
@@ -615,7 +635,7 @@ await novu.subscribers.bulkTrigger([
       }
     },
     // actorId is subscriberId of actor
-    actor: "actorId"
+    actor: "actorId",
     tenant: "tenantIdentifier"
   },
   {
@@ -633,7 +653,7 @@ await novu.subscribers.bulkTrigger([
       }
     },
     // actorId is subscriberId of actor
-    actor: "actorId"
+    actor: "actorId",
     tenant: "tenantIdentifier"
   }
 ])
@@ -646,7 +666,7 @@ import { Novu } from '@novu/node';
 
 const novu = new Novu('<NOVU_API_KEY>');
 
-await novu.subscribers.broadcast("workflowIdentifier", {
+await novu.events.broadcast("workflowIdentifier", {
   payload: {
     customKey: "customValue",
     customKey1: {
@@ -669,8 +689,9 @@ import { Novu } from '@novu/node';
 
 const novu = new Novu('<NOVU_API_KEY>');
 
-await novu.subscribers.cancel("transactionId");
+await novu.events.cancel("transactionId");
 ```
+
 ### Messages
 
 - #### List all messages 
@@ -683,8 +704,8 @@ const novu = new Novu('<NOVU_API_KEY>');
 const params = {
   page: 0, // optional
   limit: 20, // optional
-  subscriberId: "subscriberId"  //optional
-  channel: ChannelTypeEnum.EMAIL //optional
+  subscriberId: "subscriberId",  //optional
+  channel: ChannelTypeEnum.EMAIL, //optional
   transactionIds : ["txnId1","txnId2"] //optional
 }
 
@@ -712,14 +733,14 @@ const novu = new Novu('<NOVU_API_KEY>');
 
 const payload = {
   content: "<h1>Layout Start</h1>{{{body}}}<h1>Layout End</h1>",
-  description: "Organisation's first layout",
+  description: "Organization's first layout",
   name: "First Layout",
   identifier: "firstlayout",
   variables: [
     {
       type: "String",
-      name: "body"
-      required: true
+      name: "body",
+      required: true,
       defValue: ""
     }
   ]
@@ -737,14 +758,14 @@ const novu = new Novu('<NOVU_API_KEY>');
 
 const payloadToUpdate = {
   content: "<h1>Layout Start</h1>{{{body}}}<h1>Layout End</h1>",
-  description: "Organisation's first layout",
+  description: "Organization's first layout",
   name: "First Layout",
   identifier: "firstlayout",
   variables: [
     {
       type: "String",
-      name: "body"
-      required: true
+      name: "body",
+      required: true,
       defValue: ""
     }
   ]
@@ -793,7 +814,7 @@ const novu = new Novu('<NOVU_API_KEY>');
 const params = {
   page: 0, // optional
   pageSize: 20, // optional
-  sortBy: "_id"
+  sortBy: "_id",
   orderBy: -1 //optional
 }
 
@@ -969,7 +990,7 @@ await novu.environments.getCurrent()
 
 // create new environment
 await novu.environments.create({
-  name: "Stagging"
+  name: "Stagging",
   parentId: "parentEnvironmentId"
 })
 
@@ -978,7 +999,7 @@ await novu.environments.getAll()
 
 // update one environment
 await novu.environments.updateOne("environmentId", {
-  name: "Stagging" // optional
+  name: "Stagging", // optional
   parentId: "parentEnvironmentId", // optional
   identifier: "environmentIdentifier" // optional
 })
@@ -1071,7 +1092,7 @@ await novu.notificationTemplates.create({
               value: 'flag',
               operator: 'NOT_IN',
               // 'payload'
-              on: FilterPartTypeEnum.PAYLOAD,
+              on: FilterPartTypeEnum.PAYLOAD
             },
           ],
         },
@@ -1086,7 +1107,7 @@ await novu.notificationTemplates.create({
             name: 'chatContent',
             // 'String'
             type: TemplateVariableTypeEnum.STRING,
-            required: true,
+            required: true
           },
         ],
         content: '{{chatContent}}',
@@ -1097,7 +1118,7 @@ await novu.notificationTemplates.create({
   description: 'Onboarding workflow to trigger after user sign up',
   active: true,
   draft: false,
-  critical: false,
+  critical: false
 });
 ```
 
@@ -1130,4 +1151,119 @@ await novu.notificationTemplates.getAll({
   page: 0, // optional
   limit: 20 // optional
 })
+```
+
+### Organizations
+
+- #### List all organizations
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.list();
+```
+
+- #### Create new organization
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.create({ name: 'New Organization' });
+```
+
+- #### Rename organization
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.rename({ name: 'Renamed Organization' });
+```
+
+- #### Get current organization details
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.getCurrent();
+```
+
+- #### Remove member from organization
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.removeMember('memberId');
+```
+
+- #### Update organization member role
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.updateMemberRole('memberId', {
+  role: 'admin';
+});
+```
+
+- #### Get all members of organization
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.getMembers();
+```
+
+- #### Update organization branding details
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+await novu.organizations.updateBranding({
+  logo: 'https://s3.us-east-1.amazonaws.com/bucket/image.jpeg',
+  color: '#000000',
+  fontFamily: 'Lato',
+});
+```
+
+
+### Inbound Parse
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+// Validate the mx record setup for the inbound parse functionality 
+await novu.inboundParse.getMxStatus()
+```
+
+### Execution Details
+
+```ts
+import { Novu } from '@novu/node';
+
+const novu = new Novu('<NOVU_API_KEY>');
+
+const executionDetailsParams = {
+  subscriberId: 'subscriberId_123',
+  notificationId: 'notificationid_abcd'
+}
+
+// get execution details
+await novu.executionDetails.get(executionDetailsParams)
 ```

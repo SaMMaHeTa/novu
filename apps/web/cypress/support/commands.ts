@@ -33,6 +33,7 @@ Cypress.Commands.add('waitLoadTemplatePage', (beforeWait: () => void): void => {
 
   cy.wait([
     '@environments',
+    '@organizations',
     '@environments-me',
     '@notification-groups',
     '@changes-count',

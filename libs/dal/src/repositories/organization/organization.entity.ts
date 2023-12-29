@@ -1,9 +1,14 @@
+import { ApiServiceLevelEnum } from '@novu/shared';
+
 export class OrganizationEntity {
   _id: string;
 
   name: string;
 
   logo?: string;
+
+  // TODO: NV-3067 - Remove optional once all organizations have a service level
+  apiServiceLevel?: ApiServiceLevelEnum;
 
   branding: {
     fontFamily?: string;
@@ -15,6 +20,7 @@ export class OrganizationEntity {
   };
 
   partnerConfigurations?: IPartnerConfiguration[];
+  defaultLocale?: string;
 }
 
 export type OrganizationDBModel = OrganizationEntity;
@@ -29,4 +35,9 @@ export interface IPartnerConfiguration {
 
 export enum PartnerTypeEnum {
   VERCEL = 'vercel',
+}
+
+export enum DirectionEnum {
+  LTR = 'ltr',
+  RTL = 'trl',
 }
